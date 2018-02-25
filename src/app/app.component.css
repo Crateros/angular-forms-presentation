@@ -1,0 +1,28 @@
+.demo-form-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.template-forms, .reactive-forms {
+  width: 40%;
+  margin: 0 2em;
+}
+
+.form-name {
+  height: 2em;
+  background: lightgray;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 100;
+  line-height: 2em;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
