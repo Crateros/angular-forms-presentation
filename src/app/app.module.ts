@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatMenuModule,
   MatToolbarModule,
   MatIconModule,
@@ -28,6 +29,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,

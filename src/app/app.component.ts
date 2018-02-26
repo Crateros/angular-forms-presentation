@@ -1,57 +1,67 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, AfterViewInit, ViewChild, OnInit, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnChanges, AfterViewInit {
 
   reactiveForm: FormGroup;
-  name: String = '';
-  description: String = '';
-  submit: any;
+  userName: String = '';
+  userNameValidation: String = 'This field is required';
+  userInfo: String = '';
+  displayForm: any;
+  templateUserName: String = '';
+  templateUserDescription: String = '';
+  @ViewChild(NgForm) templateForm: NgForm;
 
 
   constructor(private fb: FormBuilder) {
 
     this.reactiveForm = this.fb.group({
-      // formControlName: [value, validator]
-      name: [null, Validators.required],
-      description: [null, Validators.compose([Validators.required, Validators.max(50)])],
-      validate: '',
+      // formControluserName: [value, validator]
+      userName: [null, Validators.required],
+      // for multiple validators use Validators.compose
+      userInfo: [null, Validators.compose([Validators.required, Validators.min(10), Validators.max(50)])],
+      toggleValidate: '',
     });
-
   }
 
-  // Get our form info on submission
-  handleFormSubmit(submit) {
-    this.description = submit.description;
-    this.name = submit.name;
+  ngOnInit() {
+    this.reactiveForm.controls.toggleValidate.valueChanges.subscribe(change => {
+      console.log('change: ', change);
+
+      if (change === true) {
+        console.log('here');
+        // When adding validation to the current validators array you have to include all values (previous and new)
+        this.reactiveForm.get('userName').setValidators([Validators.required, Validators.minLength(10)]);
+        this.userNameValidation = 'First & Last name required';
+        console.log(this.reactiveForm.controls.userName);
+      } else {
+        this.reactiveForm.get('userName').setValidators([Validators.required]);
+      }
+      // After changing validators you have to update the form and validity state
+      this.reactiveForm.get('userName').updateValueAndValidity();
+    });
+  }
+
+  ngAfterViewInit() {
+    console.log('reactive: ', this.reactiveForm);
+    console.log('template: ', this.templateForm);
+    console.log('template controls: ', this.templateForm.controls);
+  }
+
+  ngOnChanges() {
+    console.log('template: ', this.templateForm.controls);
+  }
+
+  showChanges() {
+    console.log('template: ', this.templateForm.controls);
   }
 
 }
 
 
-
-
-
-
-
-
-
-
-
-// Validators
-// min(min: number)
-// max(max: number)
-// required(control: AbstractControl)
-// requiredTrue(control: AbstractControl)
-// email(control: AbstractControl)
-// minLength(minLength: number)
-// maxLength(maxLength: number)
-// pattern(pattern: string | RegExp)
-// nullValidator(c: AbstractControl)
-// compose(validators: | null | undefined)
-// composeAsync(validators: (Asy | null)[])
+// /^[a-zA-
