@@ -2,21 +2,34 @@
   <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
 </div>
 <div class="demo-form-wrapper">
-  <button (click)="showChanges()">Show Template Changes</button>
-<!-- TEMPLATE DRIVEN FORM -->
+  <!-- TEMPLATE DRIVEN FORM -->
   <mat-card class="template-forms">
-    <form #templateForm="ngForm">
-      <div class="form-name">Template Forms</div>
-      <div class="example-container">
+    <div class="form-name">Template Forms</div>
+    <div class="example-container">
+      <form #templateForm="ngForm">
+      <mat-form-field>
+        <input matInput name="disabled-field" placeholder="Disabled" [(ngModel)]="templateDisabled" disabled />
+      </mat-form-field>
         <mat-form-field>
           <input matInput name="template-user" placeholder="Name" [(ngModel)]="templateUserName" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput name="template-description" placeholder="Description" [(ngModel)]="templateUserDescription" />
+          <input matInput name="template-user-info" placeholder="Info" [(ngModel)]="templateUserInfo" />
         </mat-form-field>
+        <button mat-raised-button color="primary" (click)="UpdateTemplateForm()">Update Template Form</button>
+      </form>
+    </div>
+    <mat-card-subtitle>
+      <div>
+        Template Form Controls Status: {{ templateFormControls | json }}
       </div>
-
-    </form>
+      <div>
+        Name: {{ templateUserName }}
+      </div>
+      <div>
+        Info: {{ templateUserInfo }}
+      </div>
+    </mat-card-subtitle>
   </mat-card>
 <!-- REACTIVE FORM -->
   <mat-card class="reactive-forms">
@@ -24,19 +37,61 @@
     <div class="example-container">
       <form [formGroup]="reactiveForm">
         <mat-form-field>
+          <input matInput placeholder="Improperly disabled input via directive" formControlName="improperDisabled" disabled />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Disabled input via FormControl" formControlName="properDisabled" />
+        </mat-form-field>
+        <mat-form-field>
           <input matInput placeholder="Name" formControlName="userName" />
           <mat-error *ngIf="!reactiveForm.controls['userName'].valid">{{ userNameValidation }}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Info" formControlName="userInfo" />
         </mat-form-field>
-        <mat-checkbox matInput type="checkbox" name="toggle-validate" formControlName="toggleValidate" value="on" >Toggle New Validation</mat-checkbox>
-        <mat-form-field>
-          <mat-select placeholder="Select">
-            <mat-option value="option">Option</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="reactive-controls-wrapper">
+          <div>
+            <div class="checkbox">
+              <mat-checkbox matInput type="checkbox" name="toggle-validate" formControlName="toggleNameValidation">Toggle <strong>Name</strong> Validation (manual)</mat-checkbox>
+            </div>
+            <div>
+              <button mat-raised-button color="primary" (click)="updateReactiveFormUserName()">Update Reactive Form</button>
+            </div>
+          </div>
+          <div class="checkbox">
+            <mat-checkbox matInput type="checkbox" name="toggle-validate" formControlName="toggleInfoValidation">Toggle <strong>Info</strong> Validation (automatic)</mat-checkbox>
+          </div>
+        </div>
       </form>
+    </div>
+    <div>
+      <mat-card-subtitle>
+        <div>
+          Template Form Controls Status: {{ reactiveFormControls | json }}
+        </div>
+        <div>
+          Improperly Disabled: {{ reactiveForm.controls.improperDisabled.value }} <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.improperDisabled.disabled }}</span>
+        </div>
+        <div>
+          Properly Disabled: {{ reactiveForm.controls.properDisabled.value }} <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.properDisabled.disabled }}</span>
+        </div>
+        <div>
+          Name: {{ reactiveForm.controls.userName.value }}
+        </div>
+        <div>
+          Info: {{ reactiveForm.controls.userInfo.value }}
+        </div>
+      </mat-card-subtitle>
     </div>
   </mat-card>
 </div>
+<mat-card class="reactive-observable-container">
+  <div class="form-name">Reactive Form valueChanges Subscription</div>
+</mat-card>
+
+
+<!-- <mat-form-field>
+          <mat-select placeholder="Select">
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+        </mat-form-field> -->

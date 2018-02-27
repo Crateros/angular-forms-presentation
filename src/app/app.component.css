@@ -32,3 +32,40 @@
 .example-container > * {
   width: 100%;
 }
+
+.mat-raised-button.mat-primary {
+  font-size: 1.2em;
+  background-color: lightseagreen;
+  display: block;
+  margin: 0 auto;
+
+}
+
+.checkbox {
+  margin-bottom: 1em;
+}
+
+.reactive-controls-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.reactive-observable-container {
+  margin: 2em auto;
+  width: 50%;
+}
+
+mat-card-subtitle {
+  margin: 2em 0;
+}
+
+mat-card-subtitle > div {
+  padding: 1em 0;
+  font-size: 1.5em;
+}
+
+.disabled-status {
+  color: limegreen;
+  float: right;
+  padding-right: 15em;
+}
