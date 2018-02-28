@@ -1,12 +1,13 @@
-import { Component, AfterViewInit, ViewChild, OnInit, OnChanges } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnChanges, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Template form
   templateDisabled: String = '';
@@ -20,6 +21,9 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
   reactiveFormControls: any;
   userNameValidationWarning: String = 'This field is required';
   userInfoValidationWarning: String = 'This field must be at least 10 characters long';
+  toggleDisableSubscription: Subscription;
+  toggleNameValidationSubscription: Subscription;
+  toggleInfoValidationSubscription: Subscription;
 
   constructor(private fb: FormBuilder) {
     this.reactiveForm = this.fb.group({
@@ -31,6 +35,7 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
       // for multiple validators use Validators.compose
       userInfo: [null,
         Validators.compose([Validators.required, Validators.minLength(10)])],
+      toggleDisable: [false],
       toggleNameValidation: [false],
       toggleInfoValidation: [false]
     });
@@ -40,13 +45,18 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
     this.templateFormControls = Object.keys(this.templateForm.controls);
     this.reactiveFormControls = Object.keys(this.reactiveForm.controls);
 
-    this.reactiveForm.get('toggleNameValidation').valueChanges.subscribe(change => {
+    this.toggleDisableSubscription = this.reactiveForm.get('toggleDisable').valueChanges.subscribe(change => {
+      this.toggleDisable();
+    });
+
+    this.toggleNameValidationSubscription = this.reactiveForm.get('toggleNameValidation').valueChanges.subscribe(change => {
         this.toggleNameValidation();
     });
 
-    this.reactiveForm.get('toggleInfoValidation').valueChanges.subscribe(change => {
+    this.toggleInfoValidationSubscription =  this.reactiveForm.get('toggleInfoValidation').valueChanges.subscribe(change => {
       this.toggleInfoValidation();
     });
+
   }
 
   ngAfterViewInit() {
@@ -54,7 +64,11 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
     console.log('REACTIVE form controls AfterViewInit: ', this.reactiveForm.controls);
   }
 
-  ngOnChanges() {}
+  ngOnDestroy() {
+    this.toggleDisableSubscription.unsubscribe();
+    this.toggleNameValidationSubscription.unsubscribe();
+    this.toggleInfoValidationSubscription.unsubscribe();
+  }
 
   toggleNameValidation() {
     if (this.reactiveForm.get('toggleNameValidation').value === true) {
@@ -64,6 +78,14 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
       this.reactiveForm.get('userName').setValidators([Validators.required]);
       // Reset validation warning to original value to match state of validators
       this.userNameValidationWarning = 'This field is required';
+    }
+  }
+
+  toggleDisable() {
+    if (this.reactiveForm.get('toggleDisable').value === true) {
+      this.reactiveForm.get('properDisabled').enable();
+    } else {
+      this.reactiveForm.get('properDisabled').disable();
     }
   }
 
@@ -90,6 +112,3 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
 }
-
-
-// /^[a-zA-

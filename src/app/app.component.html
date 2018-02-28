@@ -16,19 +16,23 @@
         <mat-form-field>
           <input matInput name="template-user-info" placeholder="Info" [(ngModel)]="templateUserInfo" />
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="UpdateTemplateForm()">Update Template Form</button>
+        <button mat-raised-button color="primary" (click)="UpdateTemplateForm()">Object.keys(this.templateForm.controls)</button>
       </form>
     </div>
     <mat-card-subtitle>
       <div>
         Template Form Controls Status: {{ templateFormControls | json }}
       </div>
-      <div>
-        Name: {{ templateUserName }}
+      <div>These values are controlled via <strong>[(ngModel)]</strong></div>
+      <div class="template-value-container">
+        <div>
+          Name: {{ templateUserName }}
+        </div>
+        <div>
+          Info: {{ templateUserInfo }}
+        </div>
       </div>
-      <div>
-        Info: {{ templateUserInfo }}
-      </div>
+
     </mat-card-subtitle>
   </mat-card>
 <!-- REACTIVE FORM -->
@@ -53,7 +57,10 @@
         <div class="reactive-controls-wrapper">
           <div>
             <div class="checkbox">
-              <mat-checkbox matInput type="checkbox" name="toggle-validate" formControlName="toggleNameValidation">Toggle <strong>Name</strong> Validation (manual)</mat-checkbox>
+              <mat-checkbox matInput type="checkbox" name="toggle-disable" formControlName="toggleDisable">reactiveForm.get('properDisabled').enable</mat-checkbox>
+            </div>
+            <div class="checkbox">
+              <mat-checkbox matInput type="checkbox" name="toggle-validate" formControlName="toggleNameValidation">reactiveForm.get('userName').setValidators(</mat-checkbox>
             </div>
             <div>
               <button mat-raised-button color="primary" (click)="updateReactiveFormUserName()">updateValueAndValidity()</button>
@@ -77,10 +84,12 @@
           Properly Disabled: {{ reactiveForm.controls.properDisabled.value }} <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.properDisabled.disabled }}</span>
         </div>
         <div>
-          Name: {{ reactiveForm.controls.userName.value }}
+          <code>reactiveForm.controls.userName.value</code>
+          <div>Name: {{ reactiveForm.controls.userName.value }}</div>
         </div>
         <div>
-          Info: {{ reactiveForm.controls.userInfo.value }}
+          <code>reactiveForm.get('userInfo').value</code>
+          <div>Info: {{ reactiveForm.get('userInfo').value }}</div>
         </div>
       </mat-card-subtitle>
     </div>
