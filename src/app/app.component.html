@@ -95,3 +95,10 @@
     </div>
   </mat-card>
 </div>
+<mat-card class="code-display-container">
+  <mat-card-title>Reactive Form Changes Subscription</mat-card-title>
+  <code>{{ reactiveFormChanges | json }}</code>
+  <div *ngIf="reactiveFormChanges" class="reset-button-container">
+    <button mat-raised-button color="primary" (click)="resetReactiveForm()">this.reactiveForm.reset()</button>
+  </div>
+</mat-card>

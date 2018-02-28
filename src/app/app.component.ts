@@ -13,14 +13,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   templateDisabled: String = '';
   templateUserName: String = '';
   templateUserInfo: String = '';
-  templateFormControls: any;
+  templateFormControls: Object;
   @ViewChild(NgForm) templateForm: NgForm;
 
   // Reactive form
   reactiveForm: FormGroup;
-  reactiveFormControls: any;
+  reactiveFormControls: Object;
+  reactiveFormChanges: Object;
   userNameValidationWarning: String = 'This field is required';
   userInfoValidationWarning: String = 'This field must be at least 10 characters long';
+  reactiveFormSubscription: Subscription;
   toggleDisableSubscription: Subscription;
   toggleNameValidationSubscription: Subscription;
   toggleInfoValidationSubscription: Subscription;
@@ -33,8 +35,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       properDisabled: [ { value: null, disabled: true } ],
       userName: [null, Validators.required],
       // for multiple validators use Validators.compose
-      userInfo: [null,
-        Validators.compose([Validators.required, Validators.minLength(10)])],
+      userInfo: [null, Validators.compose([Validators.required, Validators.minLength(10)])],
       toggleDisable: [false],
       toggleNameValidation: [false],
       toggleInfoValidation: [false]
@@ -44,6 +45,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.templateFormControls = Object.keys(this.templateForm.controls);
     this.reactiveFormControls = Object.keys(this.reactiveForm.controls);
+
+    this.reactiveFormSubscription = this.reactiveForm.valueChanges.subscribe(change => {
+      this.reactiveFormChanges = change;
+    });
 
     this.toggleDisableSubscription = this.reactiveForm.get('toggleDisable').valueChanges.subscribe(change => {
       this.toggleDisable();
@@ -65,6 +70,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.reactiveFormSubscription.unsubscribe();
     this.toggleDisableSubscription.unsubscribe();
     this.toggleNameValidationSubscription.unsubscribe();
     this.toggleInfoValidationSubscription.unsubscribe();
@@ -109,6 +115,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.reactiveForm.get('userName').updateValueAndValidity();
     // Update validation warning to match updated state of validators
     this.userNameValidationWarning = 'First and last name required';
+  }
+
+  resetReactiveForm() {
+    this.reactiveForm.reset();
   }
 
 }

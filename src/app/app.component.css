@@ -55,6 +55,21 @@
   width: 50%;
 }
 
+.code-display-container {
+  margin: 0 auto;
+  margin-top: 2em;
+  width: 60em;
+}
+
+.disabled-status {
+  color: lightseagreen;
+  float: right;
+}
+
+.reset-button-container {
+  margin-top: 2em;
+}
+
 mat-card-subtitle {
   margin: 2em 0;
 }
@@ -65,10 +80,6 @@ mat-card-subtitle > div {
 }
 
 code {
+  font-size: 22px;
   color: lightseagreen;
-}
-
-.disabled-status {
-  color: lightseagreen;
-  float: right;
 }
