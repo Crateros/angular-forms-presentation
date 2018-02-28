@@ -61,7 +61,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.toggleInfoValidationSubscription =  this.reactiveForm.get('toggleInfoValidation').valueChanges.subscribe(change => {
       this.toggleInfoValidation();
     });
-
   }
 
   ngAfterViewInit() {
@@ -97,10 +96,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleInfoValidation() {
     if (this.reactiveForm.get('toggleInfoValidation').value === true) {
-      this.reactiveForm.get('userName').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
+      this.reactiveForm.get('userInfo').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(50)]);
       this.userInfoValidationWarning = 'This field must be between 10 and 50 characters long';
     } else {
-      this.reactiveForm.get('userName').setValidators([Validators.required, Validators.minLength(10)]);
+      this.reactiveForm.get('userInfo').setValidators([Validators.required, Validators.minLength(10)]);
       this.userInfoValidationWarning = 'This field must be at least 10 characters long';
     }
     this.reactiveForm.get('userInfo').updateValueAndValidity();

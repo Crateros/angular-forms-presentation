@@ -26,10 +26,10 @@
       <div>These values are controlled via <strong>[(ngModel)]</strong></div>
       <div class="template-value-container">
         <div>
-          Name: {{ templateUserName }}
+          Name: <strong>{{ templateUserName }}</strong>
         </div>
         <div>
-          Info: {{ templateUserInfo }}
+          Info: <strong>{{ templateUserInfo }}</strong>
         </div>
       </div>
 
@@ -78,18 +78,18 @@
           Reactive Form Controls Status: {{ reactiveFormControls | json }}
         </div>
         <div>
-          Improperly Disabled: {{ reactiveForm.controls.improperDisabled.value }} <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.improperDisabled.disabled }}</span>
+          Improperly Disabled: <strong>{{ reactiveForm.controls.improperDisabled.value }}</strong> <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.improperDisabled.disabled }}</span>
         </div>
         <div>
-          Properly Disabled: {{ reactiveForm.controls.properDisabled.value }} <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.properDisabled.disabled }}</span>
+          Properly Disabled: <strong>{{ reactiveForm.controls.properDisabled.value }}</strong> <span class="disabled-status">Disabled Status: {{ reactiveForm.controls.properDisabled.disabled }}</span>
         </div>
         <div>
           <code>reactiveForm.controls.userName.value</code>
-          <div>Name: {{ reactiveForm.controls.userName.value }}</div>
+          <div>Name: <strong>{{ reactiveForm.controls.userName.value }}</strong></div>
         </div>
         <div>
           <code>reactiveForm.get('userInfo').value</code>
-          <div>Info: {{ reactiveForm.get('userInfo').value }}</div>
+          <div>Info: <strong>{{ reactiveForm.get('userInfo').value }}</strong></div>
         </div>
       </mat-card-subtitle>
     </div>

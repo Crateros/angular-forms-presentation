@@ -1,3 +1,17 @@
+mat-card-subtitle {
+  margin: 2em 0;
+}
+
+mat-card-subtitle > div {
+  padding: 1em 0;
+  font-size: 1.5em;
+}
+
+code {
+  font-size: 22px;
+  color: lightseagreen;
+}
+
 .demo-form-wrapper {
   display: flex;
   flex-direction: row;
@@ -70,16 +84,3 @@
   margin-top: 2em;
 }
 
-mat-card-subtitle {
-  margin: 2em 0;
-}
-
-mat-card-subtitle > div {
-  padding: 1em 0;
-  font-size: 1.5em;
-}
-
-code {
-  font-size: 22px;
-  color: lightseagreen;
-}
