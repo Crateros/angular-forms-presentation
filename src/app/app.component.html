@@ -41,13 +41,15 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Properly disabled input via FormControl property" formControlName="properDisabled" />
+
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Name" formControlName="userName" />
-          <mat-error *ngIf="!reactiveForm.controls['userName'].valid">{{ userNameValidation }}</mat-error>
+          <mat-error *ngIf="!reactiveForm.controls['userName'].valid">{{ userNameValidationWarning }}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Info" formControlName="userInfo" />
+          <mat-error *ngIf="!reactiveForm.controls['userInfo'].valid">{{ userInfoValidationWarning }}</mat-error>
         </mat-form-field>
         <div class="reactive-controls-wrapper">
           <div>
