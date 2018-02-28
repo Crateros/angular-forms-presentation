@@ -29,11 +29,8 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
       properDisabled: [ { value: null, disabled: true } ],
       userName: [null, Validators.required],
       // for multiple validators use Validators.compose
-      userInfo: [null, [
-        Validators.required,
-        Validators.minLength(10),
-       ]],
-        // Validators.compose([Validators.required, Validators.minLength(10)])],
+      userInfo: [null,
+        Validators.compose([Validators.required, Validators.minLength(10)])],
       toggleNameValidation: [false],
       toggleInfoValidation: [false]
     });
@@ -69,16 +66,6 @@ export class AppComponent implements OnInit, OnChanges, AfterViewInit {
       this.userNameValidationWarning = 'This field is required';
     }
   }
-
-
-
-
-Object.keys(value).forEach(name => {
-  this._throwIfControlMissing(name);
-    this.controls[name].setValue(value[name], { onlySelf: true, emitEvent });
-  });
-  this.updateValueAndValidity({ onlySelf, emitEvent });
-}
 
   toggleInfoValidation() {
     if (this.reactiveForm.get('toggleInfoValidation').value === true) {
